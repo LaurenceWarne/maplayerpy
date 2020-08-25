@@ -1,5 +1,4 @@
 """
-
 """
 from typing import Sequence, Tuple
 
@@ -8,8 +7,7 @@ from .map_layer import BasicLayer
 
 class VoronoiLayer(BasicLayer[int]):
     def __init__(
-            self, table: Sequence[Sequence[int]],
-            points: Sequence[Tuple[int, int]]
+        self, table: Sequence[Sequence[int]], points: Sequence[Tuple[int, int]]
     ):
         self._table = table
         self.points = points
