@@ -1,5 +1,4 @@
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 with open("requirements.txt") as f:
     dependencies = f.readlines()
@@ -8,7 +7,7 @@ setup(
     name="maplayerpy",
     packages=find_packages(),
     include_package_data=True,
-    test_suite="maplayerpy.tests",
+    test_suite="tests",
     python_requires='>=3.6',
     url="",
     version="0.1",

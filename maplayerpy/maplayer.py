@@ -23,6 +23,8 @@ class BasicLayer(MapLayer[T]):
     """
 
     def __init__(self, table: MutableSequence[MutableSequence[T]]):
+        if len(set(len(row) for row in table)) > 1:
+            raise ValueError("table rows are all of the same length")
         self._table = table
 
     def width(self) -> int:
@@ -33,6 +35,15 @@ class BasicLayer(MapLayer[T]):
 
     def __getitem__(self, key: int) -> MutableSequence[T]:
         return self._table[key]
+
+    def __setitem__(self, index: int, value: T):
+        self._table[index] = value
+
+    def __delitem__(self, item: T):
+        self._table.__delitem__(item)
+
+    def insert(self, index: int, item: T):
+        self._table.insert(index, item)
 
     def __str__(self) -> str:
         return str(self._table)
