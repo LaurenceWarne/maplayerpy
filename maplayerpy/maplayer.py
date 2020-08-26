@@ -5,6 +5,8 @@ with some useful mixins.
 from abc import abstractmethod
 from typing import MutableSequence, TypeVar
 
+from typeguard import typechecked
+
 T = TypeVar("T")
 
 
@@ -22,9 +24,10 @@ class BasicLayer(MapLayer[T]):
     a nested sequence.
     """
 
+    @typechecked
     def __init__(self, table: MutableSequence[MutableSequence[T]]):
         if len(set(len(row) for row in table)) > 1:
-            raise ValueError("table rows are all of the same length")
+            raise ValueError("table rows are not all of the same length")
         self._table = table
 
     def width(self) -> int:
