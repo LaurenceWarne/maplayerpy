@@ -7,7 +7,7 @@ from typing import Callable, MutableSequence, Sequence, Tuple
 import numpy as np
 from typeguard import typechecked
 
-from .map_layer import BasicLayer
+from .maplayer import BasicLayer
 
 
 class VoronoiLayer(BasicLayer[int]):
@@ -47,11 +47,8 @@ def get_voronoi_layer(
     width: int,
     height: int,
     points: Sequence[Tuple[int, int]],
-    distance_fn: Callable[[int, int, int, int], float] = lambda x1, y1, x2, y2: (
-        x1 - x2
-    )
-    * (x1 - x2)
-    + (y1 - y2) * (y1 - y2),
+    distance_fn: Callable[[int, int, int, int], float] =
+        lambda x, y, px, py: (x - px) * (x - px) + (y - py) * (y - py)
 ) -> VoronoiLayer:
     """Return a Voronoi diagram of size width*height.
 
@@ -62,22 +59,24 @@ def get_voronoi_layer(
         distance_fn: function used to obtain the distance between two
             (x, y) points, defaults to Euclidean distance.
     """
-    arr = np.zeros((height, width))
+    arr = np.zeros((height, width), dtype=np.int16)
     for i in range(height):
         for j in range(width):
-            arr[i][j] = min(distance_fn(j, i, px, py) for (px, py) in points)
-    return VoronoiLayer(arr, points)
+            arr[i][j] = min(
+                range(len(points)),
+                key=lambda idx: distance_fn(
+                    j, i, points[idx][0], points[idx][1]
+                )
+            )
+    return VoronoiLayer(arr.tolist(), points)
 
 
 def get_random_voronoi_layer(
     width: int,
     height: int,
     no_points: int,
-    distance_fn: Callable[[int, int, int, int], float] = lambda x1, y1, x2, y2: (
-        x1 - x2
-    )
-    * (x1 - x2)
-    + (y1 - y2) * (y1 - y2)
+    distance_fn: Callable[[int, int, int, int], float] =
+        lambda x, y, px, py: (x - px) * (x - px) + (y - py) * (y - py)
 ) -> VoronoiLayer:
     """Return a random Voronoi diagram of size width*height.
 
@@ -87,7 +86,8 @@ def get_random_voronoi_layer(
         no_points: number of points to use to create the diagram.
         distance_fn: function used to obtain the distance between two
             (x, y) points, defaults to Euclidean distance.
-    """    points = zip(
+    """
+    points = zip(
         (random.randint(0, width - 1) for i in range(no_points)),
         (random.randint(0, height - 1) for i in range(no_points)),
     )

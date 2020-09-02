@@ -65,7 +65,7 @@ class BasicLayer(MapLayer[T]):
     def __init__(self, table: Sequence[MutableSequence[T]]):
         if len(set(len(row) for row in table)) > 1:
             raise ValueError("table rows are not all of the same length")
-        self._table = (BasicMapLayerRow(row) for row in table)
+        self._table = [BasicMapLayerRow(row) for row in table]
 
     def width(self) -> int:
         return len(self._table[0]) if len(self._table) > 1 else 0
