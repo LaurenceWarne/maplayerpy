@@ -6,8 +6,8 @@ INSTALL_REQUIRES = [
 ]
 
 TEST_REQUIRES = [
-    "tox",
-    "opencv-python"
+    "pytest",
+    "opencv-python==4.1.1.26"
 ]
 
 setup(
