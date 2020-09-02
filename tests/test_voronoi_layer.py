@@ -1,6 +1,5 @@
 import random
 
-import cv2
 import numpy as np
 import pytest
 from maplayerpy.voronoi_layer import (get_random_voronoi_layer,
@@ -27,10 +26,13 @@ def test_get_voronoi_layer_returns_correct_map():
     ]
 
 
-@pytest.mark.skip(reason="Creates an image")
+@pytest.mark.voronoi_img
 def test_voronoi_img():
+    import cv2
+    no_points = 20
     random.seed(10)
     layer = get_random_voronoi_layer(
-        100, 100, 7,
+        500, 500, no_points,
     )
-    arr = np.array(layer)
+    arr = (256 // no_points) * np.array(layer, dtype=np.int16)
+    cv2.imwrite("voronoi.png", arr)

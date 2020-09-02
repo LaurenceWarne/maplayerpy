@@ -7,7 +7,6 @@ INSTALL_REQUIRES = [
 
 TEST_REQUIRES = [
     "pytest",
-    "opencv-python==4.1.1.26"
 ]
 
 setup(
