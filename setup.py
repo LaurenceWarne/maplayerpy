@@ -15,7 +15,7 @@ setup(
     include_package_data=True,
     test_suite="tests",
     python_requires=">=3.6",
-    url="",
+    url="https://github.com/LaurenceWarne/maplayerpy",
     version="0.1",
     author="Laurence Warne",
     license="MIT",
