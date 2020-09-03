@@ -3,7 +3,7 @@ This file contains abstract base classes for MapLayer objects along
 with some useful mixins.
 """
 from abc import abstractmethod
-from typing import MutableSequence, Sequence, TypeVar
+from typing import Any, MutableSequence, Sequence, TypeVar
 
 from typeguard import typechecked
 
@@ -27,7 +27,7 @@ class MapLayer(Sequence[MapLayerRow[T]]):
         pass
 
 
-class BasicMapLayerRow(MapLayerRow[T]):
+class BasicLayerRow(MapLayerRow[T]):
 
     @typechecked
     def __init__(self, row: MutableSequence[T]):
@@ -36,7 +36,7 @@ class BasicMapLayerRow(MapLayerRow[T]):
     def __len__(self) -> int:
         return len(self._row)
 
-    def __getitem__(self, key: int) -> MapLayerRow[T]:
+    def __getitem__(self, key: int) -> T:
         return self._row[key]
 
     def __setitem__(self, index: int, value: T):
@@ -47,6 +47,12 @@ class BasicMapLayerRow(MapLayerRow[T]):
 
     def insert(self, index: int, item: T):
         self._row.insert(index, item)
+
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, self.__class__) and len(self) == len(other):
+            return all(self[idx] == other[idx] for idx in range(len(self)))
+        else:
+            return False
 
     def __str__(self) -> str:
         return str(self._row)
@@ -65,7 +71,7 @@ class BasicLayer(MapLayer[T]):
     def __init__(self, table: Sequence[MutableSequence[T]]):
         if len(set(len(row) for row in table)) > 1:
             raise ValueError("table rows are not all of the same length")
-        self._table = [BasicMapLayerRow(row) for row in table]
+        self._table = [BasicLayerRow(row) for row in table]
 
     def width(self) -> int:
         return len(self._table[0]) if len(self._table) > 1 else 0
@@ -75,6 +81,12 @@ class BasicLayer(MapLayer[T]):
 
     def __getitem__(self, key: int) -> MapLayerRow[T]:
         return self._table[key]
+
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, self.__class__) and len(self) == len(other):
+            return all(self[idx] == other[idx] for idx in range(len(self)))
+        else:
+            return False
 
     def __str__(self) -> str:
         return str(self._table)
