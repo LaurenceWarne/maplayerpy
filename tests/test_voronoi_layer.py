@@ -35,4 +35,4 @@ def test_voronoi_img():
         500, 500, no_points,
     )
     arr = (256 // no_points) * np.array(layer, dtype=np.int16)
-    cv2.imwrite("voronoi.png", arr)
+    cv2.imwrite("examples/voronoi.png", arr)
