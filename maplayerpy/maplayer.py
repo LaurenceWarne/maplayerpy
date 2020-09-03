@@ -12,6 +12,7 @@ T = TypeVar("T")
 
 class MapLayerRow(MutableSequence[T]):
     """A wrapper around MutableSequence."""
+
     pass
 
 
@@ -28,7 +29,6 @@ class MapLayer(Sequence[MapLayerRow[T]]):
 
 
 class BasicLayerRow(MapLayerRow[T]):
-
     @typechecked
     def __init__(self, row: MutableSequence[T]):
         self._row = row
