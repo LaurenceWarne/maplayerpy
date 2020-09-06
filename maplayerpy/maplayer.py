@@ -58,7 +58,7 @@ class BasicLayerRow(MapLayerRow[T]):
         return str(self._row)
 
     def __repr__(self) -> str:
-        return "BasicLayer(" + repr(self._row) + ")"
+        return "BasicLayerRow(" + repr(self._row) + ")"
 
 
 class BasicLayer(MapLayer[T]):
@@ -89,7 +89,7 @@ class BasicLayer(MapLayer[T]):
             return False
 
     def __str__(self) -> str:
-        return str(self._table)
+        return "\n".join(str(row) for row in self._table)
 
     def __repr__(self) -> str:
         return "BasicLayer(" + repr(self._table) + ")"

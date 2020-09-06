@@ -48,18 +48,59 @@ def test_basic_row_eq_returns_false_on_rows_same_length_different_contents():
 
 
 def test_basic_layer_eq_returns_true_on_equal_layers():
-    r1 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
-    r2 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
-    assert r1 == r2
+    l1 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
+    l2 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
+    assert l1 == l2
 
 
 def test_basic_layer_eq_returns_false_on_rows_different_length():
-    r1 = BasicLayer[int]([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-    r2 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
-    assert (r1 == r2) is False
+    l1 = BasicLayer[int]([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    l2 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
+    assert (l1 == l2) is False
 
 
 def test_basic_layer_eq_returns_false_on_rows_same_length_different_contents():
-    r1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
-    r2 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
-    assert (r1 == r2) is False
+    l1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
+    l2 = BasicLayer[int]([[1, 2, 3], [4, 5, 6]])
+    assert (l1 == l2) is False
+
+
+def test_can_create_eq_obj_from_basic_layer_row_repr():
+    r1 = BasicLayerRow[int]([1, 2, 3])
+    assert r1 == eval(repr(r1))
+
+
+def test_can_create_eq_obj_from_basic_layer_repr():
+    l1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
+    assert l1 == eval(repr(l1))
+
+
+def test_basic_layer_row_returns_correct_str():
+    r1 = BasicLayerRow[int]([1, 2, 3])
+    assert str([1, 2, 3]) == str(r1)
+
+
+def test_basic_layer_returns_correct_str():
+    l1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
+    assert """[1, 2, 3]
+[6, 5, 4]""" == str(l1)
+
+
+def test_basic_layer_row_len_returns_correct_length():
+    r1 = BasicLayerRow[int]([1, 2, 3])
+    assert 3 == len(r1)
+
+
+def test_basic_layer_len_returns_correct_length():
+    l1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
+    assert 2 == len(l1)
+
+
+def test_basic_layer_width_returns_correct_width():
+    l1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
+    assert 3 == l1.width()
+
+
+def test_basic_layer_width_returns_correct_width_on_no_items():
+    l1 = BasicLayer[int]([])
+    assert 0 == l1.width()
