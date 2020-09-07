@@ -1,8 +1,12 @@
 from setuptools import find_packages, setup
 
-INSTALL_REQUIRES = ["numpy==1.19.1", "typeguard==2.9.1"]
+INSTALL_REQUIRES = [
+    "numpy==1.19.1",
+    "typeguard==2.9.1",
+    "perlin-numpy @ git+https://github.com/pvigier/perlin-numpy/",
+]
 
-TEST_REQUIRES = ["pytest", "flake8", "jedi", "autopep8", "black", "yapf"]
+TEST_REQUIRES = ["pytest"]
 
 setup(
     name="maplayerpy",
