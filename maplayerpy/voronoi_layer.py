@@ -8,9 +8,10 @@ import numpy as np
 from typeguard import typechecked
 
 from .maplayer import BasicLayer
+from .tesselation_layer import TesselationLayer
 
 
-class VoronoiLayer(BasicLayer[int]):
+class VoronoiLayer(BasicLayer[int], TesselationLayer):
     """A MapLayer implementation of a Voronoi diagram.
 
     For more information on Voronoi diagrams see:
@@ -31,6 +32,12 @@ class VoronoiLayer(BasicLayer[int]):
         super().__init__(table)
         self._points = points
         self._no_points = len(points)
+
+    def random_point_in_region(self, region: int) -> Tuple[float, float]:
+        pass
+
+    def random_cell_in_region(self, region: int) -> Tuple[int, int]:
+        pass
 
     @property
     def points(self) -> Sequence[Tuple[int, int]]:

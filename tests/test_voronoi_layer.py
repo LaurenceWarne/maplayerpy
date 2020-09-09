@@ -11,9 +11,7 @@ def test_voronoi_img():
     import cv2
     no_points = 20
     random.seed(1034321)
-    layer = get_random_voronoi_layer(
-        500, 500, no_points,
-    )
+    layer = get_random_voronoi_layer(500, 500, no_points)
     arr = (256 // no_points) * np.array(layer, dtype=np.int16)
     cv2.imwrite("examples/voronoi.png", arr)
 
