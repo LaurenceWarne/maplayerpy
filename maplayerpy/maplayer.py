@@ -23,6 +23,7 @@ class MapLayer(Sequence[MapLayerRow[T]]):
     the values present in the table "slots" may be changed.
     """
 
+    @property
     @abstractmethod
     def width(self) -> int:
         pass
@@ -73,6 +74,7 @@ class BasicLayer(MapLayer[T]):
             raise ValueError("table rows are not all of the same length")
         self._table = [BasicLayerRow(row) for row in table]
 
+    @property
     def width(self) -> int:
         return len(self._table[0]) if len(self._table) > 1 else 0
 

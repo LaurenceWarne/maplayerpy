@@ -98,9 +98,9 @@ def test_basic_layer_len_returns_correct_length():
 
 def test_basic_layer_width_returns_correct_width():
     l1 = BasicLayer[int]([[1, 2, 3], [6, 5, 4]])
-    assert 3 == l1.width()
+    assert 3 == l1.width
 
 
 def test_basic_layer_width_returns_correct_width_on_no_items():
     l1 = BasicLayer[int]([])
-    assert 0 == l1.width()
+    assert 0 == l1.width

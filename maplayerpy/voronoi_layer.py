@@ -22,16 +22,20 @@ class VoronoiLayer(BasicLayer[int], TesselationLayer):
     def __init__(
             self,
             table: Sequence[MutableSequence[int]],
-            points: Sequence[Tuple[int, int]]
+            points: Sequence[Tuple[int, int]],
+            spacing: int = 4
     ):
         """
         Args:
             table: table corresponding to the Voronoi diagram
             points: points used to construct the Voronoi diagram
+            spacing: integer corresponding to the minimum distance
+                between any two given points
         """
         super().__init__(table)
         self._points = points
         self._no_points = len(points)
+        self._spacing = spacing
 
     def random_point_in_region(self, region: int) -> Tuple[float, float]:
         pass
@@ -48,6 +52,11 @@ class VoronoiLayer(BasicLayer[int], TesselationLayer):
     def no_points(self) -> int:
         """Number of points used to generate this Voronoi diagram."""
         return self._no_points
+
+    @property
+    def spacing(self) -> int:
+        """The minimum distance between any two given points."""
+        return self._spacing
 
 
 def get_voronoi_layer(
