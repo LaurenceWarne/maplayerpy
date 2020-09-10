@@ -117,3 +117,26 @@ def get_random_voronoi_layer(
         (random.randint(0, height - 1) for i in range(no_points)),
     )
     return get_voronoi_layer(width, height, list(points), distance_fn)
+
+
+def get_random_points_spaced(
+    width: int,
+    height: int,
+    spacing: int,
+    no_points: int,
+    max_iters: int = 100,
+    distance_fn: Callable[[int, int, int, int], float] =
+        lambda x, y, px, py: np.sqrt((x - px) * (x - px) + (y - py) * (y - py))
+) -> Tuple[Sequence[Tuple[int, int]], bool]:
+    points, is_valid = list(), True
+    for i in range(no_points):
+        for j in range(max_iters):
+            px = random.randint(0, width - 1)
+            py = random.randint(0, height - 1)
+            if all(distance_fn(px, py, x, y) > spacing for x, y in points):
+                points.append((px, py))
+                break
+        else:
+            points.append((px, py))
+            is_valid = False
+    return points, is_valid

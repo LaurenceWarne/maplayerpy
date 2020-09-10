@@ -2,7 +2,8 @@ import random
 
 import numpy as np
 import pytest
-from maplayerpy.voronoi_layer import (get_random_voronoi_layer,
+from maplayerpy.voronoi_layer import (get_random_points_spaced,
+                                      get_random_voronoi_layer,
                                       get_voronoi_layer)
 
 
@@ -64,3 +65,25 @@ def test_cannot_set_no_points_in_voronoi_obj():
     )
     with pytest.raises(AttributeError):
         layer.no_points = 342
+
+
+def test_get_random_points_spaced_returns_correct_no_points():
+    spacing = 5
+    random.seed(10132123)
+    pts, is_valid = get_random_points_spaced(
+        100, 100, spacing, 10
+    )
+    assert 10 == len(pts)
+
+
+def test_get_random_points_spaced_returns_spaced_points_on_valid():
+    spacing = 5
+    random.seed(10132123)
+    pts, is_valid = get_random_points_spaced(
+        100, 100, spacing, 10
+    )
+    assert is_valid is True
+    for idx, (px1, py1) in enumerate(pts):
+        for (px2, py2) in pts[:idx]:
+            d = np.sqrt((px1 - px2) * (px1 - px2) + (py1 - py2) * (py1 - py2))
+            assert d > spacing
