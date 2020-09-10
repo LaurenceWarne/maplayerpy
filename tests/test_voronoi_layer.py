@@ -44,11 +44,11 @@ def test_voronoi_obj_points_are_correct():
     assert [(0, 0), (1, 1)] == layer.points
 
 
-def test_voronoi_no_points_is_correct():
+def test_voronoi_no_regions_is_correct():
     layer = get_voronoi_layer(
         4, 4, [(0, 0), (1, 1)]
     )
-    assert 2 == layer.no_points
+    assert 2 == layer.no_regions
 
 
 def test_cannot_set_points_in_voronoi_obj():
@@ -59,12 +59,12 @@ def test_cannot_set_points_in_voronoi_obj():
         layer.points = [(3, 4)]
 
 
-def test_cannot_set_no_points_in_voronoi_obj():
+def test_cannot_set_no_regions_in_voronoi_obj():
     layer = get_voronoi_layer(
         4, 4, [(0, 0), (1, 1)]
     )
     with pytest.raises(AttributeError):
-        layer.no_points = 342
+        layer.no_regions = 342
 
 
 def test_get_random_points_spaced_returns_correct_no_points():

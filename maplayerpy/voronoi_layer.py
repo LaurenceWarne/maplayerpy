@@ -38,9 +38,6 @@ class VoronoiLayer(BasicLayer[int], TesselationLayer):
         self._no_points = len(points)
         self._spacing = spacing
 
-    def random_point_in_region(self, region: int) -> Tuple[float, float]:
-        pass
-
     def random_cell_in_region(self, region: int) -> Tuple[int, int]:
         circum_circle_diam = 2 * self._spacing
         # Square circumscribed in circle
@@ -56,11 +53,6 @@ class VoronoiLayer(BasicLayer[int], TesselationLayer):
     def points(self) -> Sequence[Tuple[int, int]]:
         """Sequence of points used to generate this Voronoi diagram."""
         return self._points
-
-    @property
-    def no_points(self) -> int:
-        """Number of points used to generate this Voronoi diagram."""
-        return self._no_points
 
     @property
     def spacing(self) -> int:
