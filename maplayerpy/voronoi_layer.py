@@ -1,6 +1,7 @@
 """
 Functions and classes for creating Voronoi diagrams.
 """
+import math
 import random
 from typing import Callable, MutableSequence, Sequence, Tuple
 
@@ -41,7 +42,15 @@ class VoronoiLayer(BasicLayer[int], TesselationLayer):
         pass
 
     def random_cell_in_region(self, region: int) -> Tuple[int, int]:
-        pass
+        circum_circle_diam = 2 * self._spacing
+        # Square circumscribed in circle
+        # Here the spacing = the square's side length
+        spacing = int(1/2 * math.sqrt(circum_circle_diam**2))
+        x, y = self._points[region]
+        lx, ly = max(0, x - spacing), max(0, y - spacing)
+        hx = min(len(self.table - 1), x + spacing)
+        hy = min(len(self.table - 1), y + spacing)
+        return (random.randint(lx, hx), random.randint(ly, hy))
 
     @property
     def points(self) -> Sequence[Tuple[int, int]]:
