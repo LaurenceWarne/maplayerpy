@@ -2,7 +2,7 @@ import random
 
 import numpy as np
 import pytest
-from maplayerpy.voronoi_layer import (get_random_points_spaced,
+from maplayerpy.voronoi_layer import (VoronoiLayer, get_random_points_spaced,
                                       get_random_voronoi_layer,
                                       get_voronoi_layer)
 
@@ -87,3 +87,33 @@ def test_get_random_points_spaced_returns_spaced_points_on_valid():
         for (px2, py2) in pts[:idx]:
             d = np.sqrt((px1 - px2) * (px1 - px2) + (py1 - py2) * (py1 - py2))
             assert d > spacing
+
+
+def test_get_random_points_spaced_returns_false_on_impossible_no_points():
+    spacing = 5
+    random.seed(18934053)
+    pts, is_valid = get_random_points_spaced(
+        10, 10, spacing, 20
+    )
+    assert is_valid is False
+
+
+def test_get_voronoi_layer_random_cell_returns_point_in_region():
+    random.seed(580324750)
+    layer = VoronoiLayer(
+        [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ], [(0, 0), (5, 5)], 3
+    )
+    x, y = layer.random_cell_in_region(1)
+    assert 1 == layer[y][x]

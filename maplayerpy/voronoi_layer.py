@@ -45,8 +45,8 @@ class VoronoiLayer(BasicLayer[int], TesselationLayer):
         spacing = int(1/2 * math.sqrt(circum_circle_diam**2))
         x, y = self._points[region]
         lx, ly = max(0, x - spacing), max(0, y - spacing)
-        hx = min(len(self.table - 1), x + spacing)
-        hy = min(len(self.table - 1), y + spacing)
+        hx = min(len(self._table) - 1, x + spacing)
+        hy = min(len(self._table) - 1, y + spacing)
         return (random.randint(lx, hx), random.randint(ly, hy))
 
     @property
